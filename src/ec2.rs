@@ -8,7 +8,7 @@ const AWS_INSTANCE_IDENTITY_URL: &str =
     "http://169.254.169.254/latest/dynamic/instance-identity/document";
 
 pub fn get_ec2_metadata() -> Result<InstanceIdentity> {
-    if let Ok(true) = fs::read_to_string("/sys/hypervisor/uuid").map(|s| s.starts_with("ec2")) {
+    if let Ok(true) = fs::read_to_string("/sys/devices/virtual/dmi/id/product_uuid").map(|s| s.starts_with("ec2")) {
         let response = ureq::get(AWS_INSTANCE_IDENTITY_URL)
             .timeout(Duration::from_millis(500))
             .call()?;

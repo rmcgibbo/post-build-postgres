@@ -1,16 +1,12 @@
 use anyhow::{Context, Result};
 use std::time::Duration;
-use serde::{Serialize, Deserialize, Deserializer};
+use serde::{Serialize, Deserialize};
 use chrono::prelude::{DateTime, Local};
 use postgres::Client;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct PostBuildHookRecord {
-    #[serde(rename = "DRV_PATH")]
     pub drv_path: String,
-    
-    #[serde(rename = "OUT_PATHS")]
-    #[serde(deserialize_with = "tags_deserialize")]
     pub out_paths: Vec<String>,
 }
 
@@ -63,16 +59,3 @@ pub struct InstanceIdentity {
     #[serde(rename = "instanceId")]
     pub instance_id: String,
 }
-
-fn tags_deserialize<'de, D>(deserializer: D) -> Result<Vec<String>, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    let str_sequence = String::deserialize(deserializer)?;
-    Ok(str_sequence
-        .split(' ')
-        .map(|item| item.to_owned())
-        .collect())
-}
-
-   

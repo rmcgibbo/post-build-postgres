@@ -9,6 +9,7 @@ pub fn iter_builds_forever(
     since: Option<SystemTime>,
 ) -> Result<impl Iterator<Item = Result<BuildRecord>>> {
     let ec2_metadata = get_ec2_metadata()?;
+    println!("ec2_metadata = {:#?}", ec2_metadata);
 
     let mut journal: Journal = journal::OpenOptions::default()
         .open()
@@ -77,7 +78,7 @@ fn format(
 
     let msgs: &str = entry.get("MESSAGE").context("Failed to get MESSAGE")?;
     let msg: PostBuildHookRecord =
-        serde_json::from_str(msgs).context("Unable to parse MESSAGE as json")?;
+        serde_json::from_str(msgs).context(format!("Unable to parse MESSAGE as json: {}", msgs))?;
     let build_time = get_build_time(&msg.drv_path)?;
     let name = msg
         .drv_path
