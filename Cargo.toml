@@ -1,0 +1,16 @@
+[package]
+name = "post-build-postgres"
+version = "0.1.0"
+authors = ["Robert T. McGibbon <rmcgibbo@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1.0"
+chrono = "0.4"
+humantime = "2.1"
+postgres = {version = "0.19.1", features = ["with-chrono-0_4"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+structopt = "0.3"
+systemd = "0.8"
+ureq = { version = "2.1.0", features = ["json"] }
