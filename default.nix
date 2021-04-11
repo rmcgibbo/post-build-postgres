@@ -12,7 +12,6 @@ let
     sha256 = "0qjyfmw5v7s6ynjns4a61vlyj9cghj7vbpgrp9147ngb1f8krz2c";
   }) { };
 in naersk.buildPackage {
-  name = "nix-build-dynamodb";
   root = ./.;
 
   nativeBuildInputs = [
