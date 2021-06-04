@@ -29,17 +29,15 @@ impl BuildRecord {
             "INSERT INTO nix_build (
                 name,
                 drv_path,
-                out_paths,
                 ctime,
                 build_elapsed,
                 instance_type,
                 instance_id,
                 pull_request_number
-            ) VALUES ($1, $2, $3, $4, make_interval(secs => $5), $6, $7, $8)",
+            ) VALUES ($1, $2, $3, make_interval(secs => $4), $5, $6, $7)",
             &[
                 &self.name,
                 &self.drv_path,
-                &self.out_paths,
                 &self.timestamp,
                 &self.build_elapsed.as_secs_f64(),
                 &self.instance_type,
