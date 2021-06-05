@@ -21,4 +21,4 @@ jobs:
     # Build
     - name: Build
       run: |
-        nix-build -E "with import <nixpkgs> {}; pkgs.callPackage ./default.nix { }"
+        nix build .
