@@ -14,8 +14,7 @@
       let
         pkgs = import nixpkgs { inherit system; };
         naersk-lib = pkgs.callPackage naersk { };
-      in rec {
-        packages.post-build-postgres = naersk-lib.buildPackage {
+        pkg = naersk-lib.buildPackage {
           root = ./.;
 
           nativeBuildInputs = with pkgs; [
@@ -26,8 +25,10 @@
             systemd
           ];
         };
-        defaultPackage = packages.post-build-postgres;
-        nixosModules.post-build-postgres = (import ./module.nix);
+      in {
+        packages.post-build-postgres = pkg;
+        defaultPackage = pkg;
+        nixosModules.post-build-postgres = (import ./module.nix) { post-build-postgres = pkg; };
       });
 }
 

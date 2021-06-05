@@ -1,17 +1,12 @@
+{ post-build-postgres }:
 { lib, pkgs, config, ... }:
 with lib;
 let
   cfg = config.services.post-build-postgres;
-  defaultPkg = pkgs.callPackage ./default.nix { };
 in
 {
   options.services.post-build-postgres = {
     enable = mkEnableOption "post-build-hook postgres service";
-
-    pkg = mkOption {
-      type = types.package;
-      default = defaultPkg;
-    };
 
     databaseUrlScript = mkOption {
       type = types.str;
@@ -25,14 +20,14 @@ in
       after = [ "network-online.target" ];
       serviceConfig =
         {
-          ExecStart = "/bin/sh -c 'export DATABASE_URL=$(${cfg.databaseUrlScript}); exec ${cfg.pkg}/bin/post-build-upload'";
+          ExecStart = "/bin/sh -c 'export DATABASE_URL=$(${cfg.databaseUrlScript}); exec ${post-build-postgres}/bin/post-build-upload'";
           Restart = "always";
           RestartSec = 10;
         };
     };
 
     nix.extraOptions = ''
-      post-build-hook = ${cfg.pkg}/bin/post-build-hook
+      post-build-hook = ${post-build-postgres}/bin/post-build-hook
     '';
   };
 }
