@@ -23,7 +23,7 @@ in
     systemd.services.post-build-postgres = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network-online.target" ];
-      serviceConfig =        
+      serviceConfig =
         {
           ExecStart = "/bin/sh -c 'export DATABASE_URL=$(${cfg.databaseUrlScript}); exec ${cfg.pkg}/bin/post-build-upload'";
           Restart = "always";
@@ -31,8 +31,7 @@ in
         };
     };
 
-    nix.extraOptions =
-      ''      
+    nix.extraOptions = ''
       post-build-hook = ${cfg.pkg}/bin/post-build-hook
     '';
   };

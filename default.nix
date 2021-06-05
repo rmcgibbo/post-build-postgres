@@ -1,24 +1,7 @@
-{
-  pkgs,
-  pkg-config,
-  openssl,
-  systemd
-}:
-let
-  naersk = pkgs.callPackage (pkgs.fetchFromGitHub {
-    owner = "nmattia";
-    repo = "naersk";
-    rev = "e0fe990b478a66178a58c69cf53daec0478ca6f9";
-    sha256 = "0qjyfmw5v7s6ynjns4a61vlyj9cghj7vbpgrp9147ngb1f8krz2c";
-  }) { };
-in naersk.buildPackage {
-  root = ./.;
-
-  nativeBuildInputs = [
-    pkg-config
-  ];
-  buildInputs = [
-    openssl
-    systemd
-  ];
-}
+(import (
+  fetchTarball {
+    url = "https://github.com/edolstra/flake-compat/archive/99f1c2157fba4bfe6211a321fd0ee43199025dbf.tar.gz";
+    sha256 = "0x2jn3vrawwv9xp15674wjz9pixwjyj3j771izayl962zziivbx2"; }
+) {
+  src =  ./.;
+}).defaultNix
