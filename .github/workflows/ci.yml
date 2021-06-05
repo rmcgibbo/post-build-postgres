@@ -23,5 +23,5 @@ jobs:
     # Build
     - name: Build
       run: |
-        nix build
+        nix build -L
         nix flake check
