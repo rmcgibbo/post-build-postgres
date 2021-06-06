@@ -10,7 +10,8 @@
   };
 
   outputs = { self, nixpkgs, utils, naersk }:
-    utils.lib.eachDefaultSystem (system:
+    # darwin is not supported because we depend on systemd
+    utils.lib.eachSystem [ "aarch64-linux" "i686-linux" "x86_64-linux" ] (system:
       let
         pkgs = import nixpkgs { inherit system; };
         naersk-lib = pkgs.callPackage naersk { };
