@@ -1,7 +1,7 @@
 {
   description = "Nix post-build-hook to upload to postgres";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
     naersk = {
       url = "github:nmattia/naersk";
